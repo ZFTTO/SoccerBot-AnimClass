@@ -321,7 +321,12 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
 .logo-car .bot-track{border-width:.16em;background:repeating-linear-gradient(90deg,#253b4c 0 .32em,#425a6b .32em .49em)}
 .logo-car .bot-wheel,.logo-car .bot-wheel::after{border-width:.11em}
 @media(max-width:420px){.code-car{font-size:.8em}}
-#partsOverview{min-height:0}
+#partsOverview{min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);gap:clamp(5px,1.4dvh,14px)}
+.parts-safety{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.parts-safety p{margin:0;padding:.48em .7em;border-radius:8px;background:#fff3d8;color:#664219;line-height:1.25}
+.parts-safety strong{margin-inline-end:.4em}
+.parts-safety .en{color:inherit}
+@media(max-width:380px){.parts-safety{grid-template-columns:1fr}}
 .part-grid{
   display:grid;grid-template-columns:minmax(0,1.12fr) repeat(2,minmax(0,1fr));
   grid-template-rows:repeat(2,minmax(0,1fr));gap:clamp(6px,1.4dvh,16px);
@@ -441,6 +446,10 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
 <button id="runTab" aria-pressed="false" disabled><span class="lesson-number">3</span>啟動馬達與舵機<span class="en" lang="en">Run motors &amp; servo</span></button>
 </nav>
 <section id="partsOverview" aria-label="電子零件 / Electronic parts">
+<aside class="parts-safety" aria-label="接線前必讀 / Before wiring">
+  <p><strong>Power OFF</strong> 所有接線操作前，先關掉電源。<span class="en" lang="en">Turn off the power before connecting or moving any wires.</span></p>
+  <p><strong>Ask First</strong> 有不明白的地方，先問導師。<span class="en" lang="en">If you’re unsure, ask your instructor before you continue.</span></p>
+</aside>
 <ul class="part-grid">
 <li class="part-card part-card--main">
   <div><strong>主控板</strong><span class="en" lang="en">Controller board</span></div>
