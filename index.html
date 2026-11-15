@@ -321,7 +321,7 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
 .logo-car .bot-track{border-width:.16em;background:repeating-linear-gradient(90deg,#253b4c 0 .32em,#425a6b .32em .49em)}
 .logo-car .bot-wheel,.logo-car .bot-wheel::after{border-width:.11em}
 @media(max-width:420px){.code-car{font-size:.8em}}
-#partsOverview{min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);gap:clamp(5px,1.4dvh,14px)}
+#partsOverview{min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:clamp(5px,1.4dvh,14px)}
 .parts-safety{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .parts-safety p{margin:0;padding:.48em .7em;border-radius:8px;background:#fff3d8;color:#664219;line-height:1.25}
 .parts-safety strong{margin-inline-end:.4em}
@@ -446,10 +446,6 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
 <button id="runTab" aria-pressed="false" disabled><span class="lesson-number">3</span>啟動馬達與舵機<span class="en" lang="en">Run motors &amp; servo</span></button>
 </nav>
 <section id="partsOverview" aria-label="電子零件 / Electronic parts">
-<aside class="parts-safety" aria-label="接線前必讀 / Before wiring">
-  <p><strong>Power OFF</strong> 所有接線操作前，先關掉電源。<span class="en" lang="en">Turn off the power before connecting or moving any wires.</span></p>
-  <p><strong>Ask First</strong> 有不明白的地方，先問導師。<span class="en" lang="en">If you’re unsure, ask your instructor before you continue.</span></p>
-</aside>
 <ul class="part-grid">
 <li class="part-card part-card--main">
   <div><strong>主控板</strong><span class="en" lang="en">Controller board</span></div>
@@ -463,6 +459,10 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
 <li class="part-card"><div><strong>舵機</strong><span class="en" lang="en">Servo</span></div><span class="part-product part-servo" aria-hidden="true"></span><p>轉動凸輪，帶動球叉踢球。<span class="en" lang="en">Turns the cam to move the kicking fork.</span></p></li>
 <li class="part-card"><div><strong>電池</strong><span class="en" lang="en">Battery</span></div><span class="part-product part-battery" aria-hidden="true"></span><p>提供 7.4 V 電源。<span class="en" lang="en">Provides 7.4 V power.</span></p></li>
 </ul>
+<aside class="parts-safety" aria-label="接線前必讀 / Before wiring">
+  <p><strong>Power OFF</strong> 所有接線操作前，先關掉電源。<span class="en" lang="en">Turn off the power before connecting or moving any wires.</span></p>
+  <p><strong>Ask First</strong> 有不明白的地方，先問導師。<span class="en" lang="en">If you’re unsure, ask your instructor before you continue.</span></p>
+</aside>
 </section>
 <section class="e-demo" id="electronicsDemo" hidden>
 <div class="e-stage"><canvas id="electronicsDrawing" aria-label="LuluLab 擴展板、ESP32、舵機、左右馬達和電池 / LuluLab expansion board, ESP32, servo, two motors and battery"></canvas></div>
