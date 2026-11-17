@@ -109,11 +109,9 @@ button:is([aria-selected=true],[aria-pressed=true],.primary),button:enabled:acti
 }
 button:is([aria-selected=true],[aria-pressed=true],.primary):hover{background:var(--blue-deep)}
 .chapters{
-  --tab-curve:clamp(7px,1.35dvh,12px);
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
   position:relative;z-index:1;align-self:end;
-  padding:4px calc(var(--tab-curve) + 4px) 0;
-  border-radius:14px 14px 0 0;background:#ddeaf6;
+  border-radius:12px 12px 0 0;background:#ddeaf6;
 }
 .chapters button{
   position:relative;display:flex;align-items:center;justify-content:center;
@@ -126,15 +124,8 @@ button:is([aria-selected=true],[aria-pressed=true],.primary):hover{background:va
   content:"";position:absolute;inset:25% auto 25% 0;width:1px;background:#adc5da;pointer-events:none;
 }
 .chapters button[aria-selected=true]{
-  z-index:1;background:var(--white);color:var(--blue-deep);box-shadow:0 1px var(--white);
+  background:var(--white);color:var(--blue-deep);box-shadow:0 1px var(--white);
 }
-.chapters button[aria-selected=true]::before,.chapters button[aria-selected=true]::after{
-  content:"";position:absolute;bottom:-1px;width:var(--tab-curve);height:calc(var(--tab-curve) + 1px);
-  background:radial-gradient(circle at var(--curve-origin) top,
-    transparent calc(var(--tab-curve) - .7px),var(--white) var(--tab-curve));pointer-events:none;
-}
-.chapters button[aria-selected=true]::before{right:100%;--curve-origin:left}
-.chapters button[aria-selected=true]::after{left:100%;--curve-origin:right}
 .chapters button:focus-visible{outline-offset:-4px}
 .chapter-name{white-space:nowrap}
 .chapters button .chapter-name .en{color:inherit}
