@@ -107,7 +107,7 @@ button:is([aria-selected=true],[aria-pressed=true],.primary),button:enabled:acti
 button:is([aria-selected=true],[aria-pressed=true],.primary):hover{background:var(--blue-deep)}
 .chapters{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
-  border-radius:12px 12px 0 0;background:#ddeaf6;
+  border-inline-end:1px solid var(--line);border-radius:12px 12px 0 0;background:#ddeaf6;
 }
 .chapters button{
   position:relative;display:flex;align-items:center;justify-content:center;
@@ -142,7 +142,7 @@ button:is([aria-selected=true],[aria-pressed=true],.primary):hover{background:va
   .chapter-name .en{display:inline;margin:0 0 0 .5em}
 }
 #mechanical,#electronics,#programming{background:white;border:1px solid var(--line);
-  border-top-color:transparent;margin:0;border-radius:0 0 17px 17px;
+  border-top:0;margin:0;border-radius:0 0 17px 17px;
   box-shadow:0 8px 26px #3057790c;padding:clamp(8px,1.7dvh,20px)}
 #electronics,#programming{overflow:hidden}
 #mechanical nav,.electron-tabs{background:#edf3f8;padding:4px;gap:4px;border-radius:10px}
@@ -185,6 +185,7 @@ footer{border-top:none;padding-inline:0}
 }
 @media (orientation:portrait){
   .lab-heading{margin-bottom:10px}
+  .chapters{border-inline-start:1px solid var(--line)}
   #mechanical article{margin-top:0}
   .mechanical-sidebar .copy,.mechanical-sidebar .controls{padding-inline:0}
   #programming .steps{padding:0 0 0 24px}
