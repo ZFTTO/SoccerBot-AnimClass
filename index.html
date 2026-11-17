@@ -7,7 +7,7 @@
 *{box-sizing:border-box}
 body{margin:0;background:#f5f8fc;color:#182c40;font:16px/1.5 system-ui,sans-serif}
 main{width:min(1060px,100%);margin:auto;padding:clamp(14px,4vw,42px)}
-h1{margin:0;font-size:clamp(30px,6vw,56px);letter-spacing:-.04em}
+h1{margin:0}
 h2{margin:0;font-size:clamp(21px,4vw,30px)}
 .en{display:block;color:#526578;font-size:.78em;font-weight:500}
 header p{margin:5px 0 24px}
@@ -49,11 +49,8 @@ footer{border-top:1px solid #e4edf5;color:#4b6174;font-size:13px}
 @media (orientation:landscape) {
   body{font-size:clamp(12px,2.6dvh,17px);line-height:1.33}
   main{width:min(100%,1600px);height:100dvh;padding:clamp(6px,1.5dvh,18px);display:grid;
-    grid-template-columns:minmax(0,1fr) minmax(0,1.55fr);grid-template-rows:auto minmax(0,1fr);
+    grid-template-columns:minmax(min(190px,50%),1.2fr) minmax(0,3fr);grid-template-rows:auto minmax(0,1fr);
     gap:clamp(5px,1.4dvh,14px)}
-  header{align-self:center}
-  h1{font-size:clamp(16px,4dvh,34px)}
-  h1 .en{font-size:.56em}
   h2{font-size:clamp(15px,3.25dvh,27px)}
   button{min-height:0;padding:.42em .6em;border-radius:8px}
   #mechanical,#electronics,#programming{grid-column:1/-1;min-height:0;margin:0}
@@ -92,13 +89,13 @@ footer{border-top:1px solid #e4edf5;color:#4b6174;font-size:13px}
 }
 body{background:#eef4f8;color:var(--ink);font-family:Inter,system-ui,sans-serif}
 main{width:min(100%,1480px)}
-.lab-heading{min-width:0;overflow:hidden;padding:4px}
+.lab-heading{display:flex;align-items:center;min-width:0;overflow:hidden;padding:4px}
 .lab-heading-content{display:flex;align-items:center;gap:clamp(4px,1dvh,10px)}
 button.lab-logo{display:grid;place-items:center;flex:none;min-height:0;padding:3px;
   background:none;border:0;border-radius:6px}
 button.lab-logo:active{background:none}
-h1{font-size:clamp(19px,4.4dvh,36px);line-height:1.05;letter-spacing:-.04em}
-h1 .en{margin-top:4px;font-size:.46em;letter-spacing:.06em;color:var(--muted);font-weight:650}
+h1{font-size:clamp(20px,5.1vw,28px);line-height:1.1;letter-spacing:-.035em}
+h1 .en{margin-top:.2em;font-size:.53em;letter-spacing:.06em;color:var(--muted);font-weight:650}
 h2{letter-spacing:-.025em;line-height:1.17}
 .en{color:var(--muted)}
 button{line-height:1.18;background:var(--white);color:var(--ink);border-color:#cfdeeb;font-weight:650}
@@ -110,7 +107,7 @@ button:is([aria-selected=true],[aria-pressed=true],.primary),button:enabled:acti
 button:is([aria-selected=true],[aria-pressed=true],.primary):hover{background:var(--blue-deep)}
 .chapters{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
-  position:relative;z-index:1;align-self:end;
+  position:relative;z-index:1;
   border-radius:12px 12px 0 0;background:#ddeaf6;
 }
 .chapters button{
@@ -169,6 +166,7 @@ footer{border-top:none;padding-inline:0}
 #programming code{background:#e4f0fc;color:#074f9e;border-radius:4px;padding:.1em .25em}
 @media (orientation:landscape){
   main{padding:clamp(6px,1.6dvh,20px);gap:0 clamp(6px,1.6dvh,18px)}
+  h1{font-size:clamp(15px,3.55dvh,28px)}
   #mechanical,#electronics,#programming{border-top-left-radius:17px}
   #mechanical{gap:clamp(5px,1.6dvh,15px)}
   #mechanical nav{justify-self:start}
@@ -186,7 +184,7 @@ footer{border-top:none;padding-inline:0}
   #programming{justify-content:center;padding-inline:clamp(12px,4vw,70px)}
 }
 @media (orientation:portrait){
-  .lab-heading{margin-bottom:14px}
+  .lab-heading{margin-bottom:10px}
   #mechanical article{margin-top:0}
   .mechanical-sidebar .copy,.mechanical-sidebar .controls{padding-inline:0}
   #programming .steps{padding:0 0 0 24px}
@@ -315,7 +313,7 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
 .code-phone::after{bottom:.18em;width:1.24em;height:2px}
 .code-car{position:relative;width:8.2em;height:5.4em;margin:0 auto .34em}
 .code-car :is(i,span){position:absolute}
-.lab-logo .logo-car{display:block;margin:0;font-size:clamp(4px,.95dvh,9px)}
+.lab-logo .logo-car{display:block;margin:0;font-size:clamp(4px,.84dvh,7px)}
 .code-car .bot-track{
   left:1.13em;bottom:.10em;width:4.95em;height:2.22em;border-radius:1.11em;
   background:repeating-linear-gradient(90deg,#253b4c 0 6px,#425a6b 6px 9px);border:3px solid #263d50
