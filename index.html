@@ -273,23 +273,27 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
 @media(prefers-reduced-motion:reduce){
   .connect-art *,.demo-cable::after{animation:none}
 }
-.code-scene{display:grid;grid-template-columns:auto minmax(74px,1fr) minmax(74px,1fr);
-  align-items:center;gap:clamp(6px,2vw,22px);padding:clamp(6px,1.8dvh,18px);
+.code-scene{display:grid;grid-template-columns:max-content minmax(0,1fr) max-content;
+  align-items:center;gap:clamp(6px,1vw,12px);padding:clamp(6px,1.8dvh,18px);
   border-radius:12px;background:#e7f1fa;min-width:0}
 .code-phone{padding:.35em;background:white;border:2px solid #789bb8;border-radius:10px;
   display:grid;gap:.3em;text-align:center;box-shadow:0 3px #c0d6e7}
 .code-phone strong{font-size:.8em;color:#254e71}
 #codeForward{touch-action:none;min-height:0;padding:.4em .6em}
-.code-wire{text-align:center;font-size:.78em;color:#385e7d}
-.code-signal{position:relative;margin:.38em 0;height:4px;background:#95bbd9;border-radius:4px}
-.code-signal::after{position:absolute;right:-3px;top:-8px;content:"›";font-weight:800;font-size:15px}
+.code-wire{position:relative;top:-.7em;text-align:center;font-size:.78em;color:#385e7d}
+.code-wire>span{position:absolute;left:50%;bottom:calc(100% + .8em);transform:translateX(-50%);white-space:nowrap}
+.code-signal{position:relative;margin-right:10px;height:5px;background:#357bb5;border-radius:4px}
+.code-signal::after{
+  content:"";position:absolute;top:50%;right:-10px;transform:translateY(-50%);
+  border-block:8px solid transparent;border-left:12px solid #357bb5;
+}
 #codePacket{position:absolute;z-index:1;top:-.65em;left:0;white-space:nowrap;
   border:1px solid #9bc5e7;background:#f8fcff;color:#084d87;padding:.2em .34em}
 #programming #codePacket{background:#f8fcff}
-.code-car-area{text-align:center;min-width:0}
+.code-car-area{--code-drive-distance:clamp(5px,2vw,24px);text-align:center;min-width:0;padding-right:var(--code-drive-distance)}
 .code-car.running{animation:code-drive .7s ease-out both}
 .code-car.paused{animation-play-state:paused}
-@keyframes code-drive{from{transform:translateX(0)}to{transform:translateX(clamp(5px,2vw,24px))}}
+@keyframes code-drive{from{transform:translateX(0)}to{transform:translateX(var(--code-drive-distance))}}
 #codeCarState{font-size:.77em;color:#315b79}
 #program-code .steps li[data-active]{border-color:#77afd9;background:#eaf5ff}
 @media (orientation:landscape) and (max-height:410px){
@@ -309,11 +313,6 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
 }
 .code-phone::before{top:.25em;width:1em;height:2px}
 .code-phone::after{bottom:.18em;width:1.24em;height:2px}
-.code-signal{height:5px;margin:.62em 8px .4em;background:#357bb5}
-.code-signal::after{
-  content:"";width:0;height:0;top:50%;right:-9px;transform:translateY(-50%);
-  border-block:8px solid transparent;border-left:12px solid #357bb5
-}
 .code-car{position:relative;width:8.2em;height:5.4em;margin:0 auto .34em}
 .code-car :is(i,span){position:absolute}
 .lab-logo .logo-car{display:block;margin:0;font-size:clamp(4px,.95dvh,9px)}
@@ -351,7 +350,10 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
   background:#70b1e2;border-radius:3px 7px 5px 3px}
 .logo-car .bot-track{border-width:.16em;background:repeating-linear-gradient(90deg,#253b4c 0 .32em,#425a6b .32em .49em)}
 .logo-car .bot-wheel,.logo-car .bot-wheel::after{border-width:.11em}
-@media(max-width:420px){.code-car{font-size:.8em}}
+@media(max-width:420px){
+  .code-car{font-size:.8em}
+  .code-scene{font-size:clamp(12px,3.4vw,14px);padding-inline:8px}
+}
 #partsOverview{min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:clamp(5px,1.4dvh,14px)}
 .parts-safety{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .parts-safety p{margin:0;padding:.48em .7em;border-radius:8px;background:#fff3d8;color:#664219;line-height:1.25}
