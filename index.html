@@ -408,6 +408,17 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
   .part-card p{font-size:.9em;margin-top:.42em}
   .controller-pcb{width:min(75%,25dvh)}
 }
+@media(orientation:portrait), (max-height:480px){
+  #mechanical,#electronics{display:grid;gap:10px}
+  :is(#mechanical,#electronics) .lesson-tabs button:focus-visible{outline-offset:-3px}
+  #partsOverview{grid-template-rows:auto auto}
+  .part-grid{height:auto;grid-template-rows:none}
+  .part-card--main{grid-template-rows:auto auto auto}
+}
+@media(orientation:landscape) and (max-height:480px){
+  main:has(:is(#mechanical,#electronics):not([hidden])){height:auto;min-height:100dvh}
+  #mechanical canvas,.e-stage{height:clamp(170px,calc(100dvh - 128px),360px)}
+}
 </style>
 <main>
 <header class="lab-heading">
