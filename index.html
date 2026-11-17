@@ -518,11 +518,11 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
 </aside>
 </section>
 <section class="e-demo" id="electronicsDemo" hidden>
-<div class="e-stage"><canvas id="electronicsDrawing" aria-label="LuluLab 擴展板、ESP32、舵機、左右馬達和電池 / LuluLab expansion board, ESP32, servo, two motors and battery"></canvas></div>
+<div class="e-stage"><canvas id="electronicsDrawing" aria-label="LuluLab 擴展板、ESP32-C3 Super Mini 主控板、舵機、左右馬達和電池 / LuluLab expansion board, ESP32-C3 Super Mini controller board, servo, two motors and battery"></canvas></div>
 <div class="e-controls" id="assemblyControls">
-<button class="primary" id="connectPart">裝上 ESP32-C3<span class="en" lang="en">Fit ESP32-C3</span></button>
+<button class="primary" id="connectPart">裝上主控板<span class="en" lang="en">Fit the controller board</span></button>
 <button id="resetElectronics" disabled>重新組裝<span class="en" lang="en">Reset assembly</span></button>
-<p class="e-status" id="assemblyStatus" aria-live="polite">擴展板有降壓模組和馬達驅動模組。先裝上 ESP32-C3。<span class="en" lang="en">The expansion board has a voltage converter and a motor driver. Fit the ESP32-C3 first.</span></p>
+<p class="e-status" id="assemblyStatus" aria-live="polite">擴展板有降壓模組和馬達驅動模組。先裝上主控板。<span class="en" lang="en">The expansion board has a voltage converter and a motor driver. Fit the controller board first.</span></p>
 </div>
 <div class="e-controls" id="runControls" hidden><div class="demo-buttons">
 <button data-output="left" aria-pressed="false">左馬達<span class="en" lang="en">Left motor</span></button>
@@ -685,7 +685,7 @@ chapterTabs.forEach((tab, index) => {
   };
 });
 const connectSteps=[
-  ['裝上 ESP32-C3','Fit ESP32-C3','ESP32-C3 插在擴展板的排針上。','The ESP32-C3 plugs into the expansion board headers.'],
+  ['裝上主控板','Fit the controller board','把 ESP32-C3 Super Mini 的兩排針腳對準擴展板插上。','Line up both rows of pins on the ESP32-C3 Super Mini and plug it into the expansion board.'],
   ['接舵機','Connect the servo','舵機的三線插頭橫向接到 H2。','The servo’s three-wire plug slides into H2.'],
   ['接左馬達','Connect the left motor','左馬達的兩線插頭橫向接到 H1。','The left motor’s two-wire plug slides into H1.'],
   ['接右馬達','Connect the right motor','右馬達的兩線插頭橫向接到 H3。','The right motor’s two-wire plug slides into H3.'],
@@ -732,8 +732,8 @@ $('connectPart').onclick=()=>{
 $('resetElectronics').onclick=()=>{
   connectedParts=0; joinStarted=null; leftSpin=rightSpin=0;
   showElectronics('assembly');
-  bilingual($('assemblyStatus'),'擴展板有降壓模組和馬達驅動模組。先裝上 ESP32-C3。',
-    'The expansion board has a voltage converter and a motor driver. Fit the ESP32-C3 first.');
+  bilingual($('assemblyStatus'),'擴展板有降壓模組和馬達驅動模組。先裝上主控板。',
+    'The expansion board has a voltage converter and a motor driver. Fit the controller board first.');
   updateAssemblyButton();
 };
 for(const button of outputButtons){
@@ -1436,29 +1436,67 @@ function drawElectronics(now,dt){
     rect(ctx,x-2,y-2,4,4,2,'#bde8eb');
   }
 
+  const moduleLeft=462,moduleTop=62,moduleWidth=64,moduleHeight=80;
+  const servoPinY=moduleTop+43, powerPinY=moduleTop+67, driverSignalY=moduleTop+75;
   const servoY=99,leftY=172,rightY=243,batteryY=241;
-  const toServo=[[429,91],[398,91],[398,servoY-9],[339,servoY-9]];
-  const toDriver=[[472,126],[472,140],[489,140],[489,151]];
+  const toServo=[[moduleLeft,servoPinY],[398,servoPinY],[398,servoY-9],[339,servoY-9]];
+  const toDriver=[[moduleLeft+moduleWidth,driverSignalY],[535,driverSignalY],[535,151]];
   const toLeft=[[451,179],[401,179],[401,leftY-4.5],[339,leftY-4.5]];
   const toRight=[[451,190],[417,190],[417,rightY-4.5],[339,rightY-4.5]];
   const batteryInput=[[648,batteryY],[614,batteryY],[614,251],[587,251]];
   const driverPower=[[614,batteryY],[614,178],[576,178]];
-  const boardPower=[[467,227],[441,227],[441,125],[456,125]];
+  const boardPower=[[467,227],[441,227],[441,powerPinY],[moduleLeft,powerPinY]];
   const servoPower=[[467,248],[389,248],[389,servoY],[339,servoY]];
   for(const route of [toServo,toDriver,toLeft,toRight,batteryInput,driverPower,boardPower,servoPower]){
     line(route,'#529aaa',2.5);
   }
 
-  plate(428,67,131,59,'#3c677b','#275263',9);
-  for(const x of [439,548])for(let y=76;y<=115;y+=10)rect(ctx,x-2,y,4,5,2,'#e5ba63');
-  const moduleProgress=installed(0);
-  const chipX=435+241*(1-moduleProgress),chipY=72-26*(1-moduleProgress);
-  if(moduleProgress<1){
-    ctx.setLineDash([4,5]);line([[chipX-5,chipY+26],[561,97]],'#3b8496',2);ctx.setLineDash([]);
+  function headerRows(x,y,pad,hole){
+    for(const column of [x+5,x+moduleWidth-5]){
+      for(let row=0;row<8;row++){
+        const pinY=y+11+row*8;
+        rect(ctx,column-3.5,pinY-2.8,7,5.6,2,pad);
+        rect(ctx,column-1.5,pinY-1.5,3,3,1.5,hole);
+      }
+    }
   }
-  plate(chipX,chipY,117,49,'#294a66','#152f4a',8);
-  rect(ctx,chipX+91,chipY+16,28,13,4,'#cedeea');
-  caption('ESP32-C3','MCU',chipX+53,chipY+21,white);
+  function drawSuperMini(x,y){
+    plate(x,y,moduleWidth,moduleHeight,'#233a4d','#182a3a',6);
+    headerRows(x,y,'#f6cb70','#705132');
+    rect(ctx,x+16,y+5,21,8,2,'#df735d');
+    rect(ctx,x+15,y+7,3,4,1,'#f7cf81');
+    rect(ctx,x+44,y+8,5,4,1,'#82b9f0');
+
+    ctx.save();
+    ctx.translate(x+32,y+34);
+    ctx.rotate(Math.PI/4);
+    rect(ctx,-11,-11,22,22,3,'#0b1f31');
+    for(const offset of [-7,-3,1,5]){
+      rect(ctx,offset,-13,2,3,1,'#9cb1bf');
+      rect(ctx,offset,10,2,3,1,'#9cb1bf');
+      rect(ctx,-13,offset,3,2,1,'#9cb1bf');
+      rect(ctx,10,offset,3,2,1,'#9cb1bf');
+    }
+    rect(ctx,-7,-7,3,3,1,'#a0bfce');
+    ctx.restore();
+
+    rect(ctx,x+18,y+57,10,8,2,'#bed0db');
+    rect(ctx,x+36,y+57,10,8,2,'#bed0db');
+    rect(ctx,x+21,y+59,4,4,1,'#3f566a');
+    rect(ctx,x+39,y+59,4,4,1,'#3f566a');
+    rect(ctx,x+18,y+68,28,17,4,'#b9cedc');
+    rect(ctx,x+21,y+78,22,5,2,'#31495c');
+  }
+
+  rect(ctx,moduleLeft-3,moduleTop-2,moduleWidth+6,moduleHeight+5,6,'#45899a');
+  headerRows(moduleLeft,moduleTop,'#25596c','#b6e0de');
+  const moduleProgress=installed(0);
+  const moduleX=moduleLeft+217*(1-moduleProgress),moduleY=moduleTop-26*(1-moduleProgress);
+  if(moduleProgress<1){
+    ctx.setLineDash([4,5]);line([[moduleX-5,moduleY+40],[moduleLeft+moduleWidth+4,moduleTop+40]],'#3b8496',2);ctx.setLineDash([]);
+  }
+  drawSuperMini(moduleX,moduleY);
+  caption('ESP32-C3','Super Mini',moduleX+115,moduleY+36,ink);
 
   plate(451,151,125,55,'#315470','#1a3954',8);
   caption('馬達驅動','Motor driver',513,175,white);
