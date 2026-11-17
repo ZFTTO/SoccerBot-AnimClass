@@ -21,9 +21,6 @@ button:disabled{opacity:.52;cursor:default}
 button:focus-visible,input:focus-visible{outline:3px solid #e79012;outline-offset:3px}
 article{margin-top:12px;background:white;border:1px solid #dce6ef;border-radius:18px;overflow:hidden}
 [hidden]{display:none!important}
-.chapters{margin:0 0 12px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding:4px;background:#e6eff7;border:1px solid #d7e5f0;border-radius:12px}
-.chapters button{min-width:0;border-color:transparent;background:transparent;text-align:center}
-.chapters button[aria-pressed=true],.chapters button:active{background:#075eac;color:white}
 #mechanical{background:white;border:1px solid #dce6ef;border-radius:18px;padding:clamp(5px,1.2dvh,16px)}
 #mechanical nav{margin-bottom:9px}
 #mechanical article{border-radius:12px}
@@ -59,8 +56,6 @@ footer{border-top:1px solid #e4edf5;color:#4b6174;font-size:13px}
   h1 .en{font-size:.56em}
   h2{font-size:clamp(15px,3.25dvh,27px)}
   button{min-height:0;padding:.42em .6em;border-radius:8px}
-  .chapters{margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
-  .chapters button{min-width:0}
   #mechanical,#electronics,#programming{grid-column:1/-1;min-height:0;margin:0}
   #mechanical{display:grid;grid-template-rows:auto minmax(0,1fr);gap:5px}
   #mechanical nav{margin:0}
@@ -109,15 +104,59 @@ h2{letter-spacing:-.025em;line-height:1.17}
 button{line-height:1.18;background:var(--white);color:var(--ink);border-color:#cfdeeb;font-weight:650}
 button .en{margin-top:.22em}
 button:enabled:hover{border-color:#67a4d7}
-button:is([aria-selected=true],[aria-pressed=true],.primary),button:enabled:active,
-.chapters button[aria-pressed=true],.chapters button:active{
+button:is([aria-selected=true],[aria-pressed=true],.primary),button:enabled:active{
   color:white;background:var(--blue);border-color:var(--blue)
 }
 button:is([aria-selected=true],[aria-pressed=true],.primary):hover{background:var(--blue-deep)}
-.chapters{background:white;border-color:var(--line);padding:4px;gap:4px;border-radius:13px}
-.chapters button{border:1px solid transparent;border-radius:9px}
+.chapters{
+  --tab-curve:clamp(7px,1.35dvh,12px);
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
+  position:relative;z-index:1;align-self:end;
+  padding:4px calc(var(--tab-curve) + 4px) 0;
+  border-radius:14px 14px 0 0;background:#ddeaf6;
+}
+.chapters button{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  gap:clamp(4px,.7vw,10px);min-width:0;min-height:clamp(38px,7dvh,54px);
+  padding:.42em clamp(3px,.7vw,10px);border:0;border-radius:12px 12px 0 0;
+  background:transparent;color:#34546e;text-align:left;
+}
+.chapters button[aria-selected=false]:is(:hover,:active){background:#edf5fd;color:#244966}
+.chapters button[aria-selected=false] + button[aria-selected=false]::before{
+  content:"";position:absolute;inset:25% auto 25% 0;width:1px;background:#adc5da;pointer-events:none;
+}
+.chapters button[aria-selected=true]{
+  z-index:1;background:var(--white);color:var(--blue-deep);box-shadow:0 1px var(--white);
+}
+.chapters button[aria-selected=true]::before,.chapters button[aria-selected=true]::after{
+  content:"";position:absolute;bottom:-1px;width:var(--tab-curve);height:calc(var(--tab-curve) + 1px);
+  background:radial-gradient(circle at var(--curve-origin) top,
+    transparent calc(var(--tab-curve) - .7px),var(--white) var(--tab-curve));pointer-events:none;
+}
+.chapters button[aria-selected=true]::before{right:100%;--curve-origin:left}
+.chapters button[aria-selected=true]::after{left:100%;--curve-origin:right}
+.chapters button:focus-visible{outline-offset:-4px}
+.chapter-name{white-space:nowrap}
+.chapters button .chapter-name .en{color:inherit}
+.chapter-icon{position:relative;display:grid;place-items:center;flex:none;width:1.4em;line-height:1}
+.chapter-icon--gear{font-size:1.25em;width:1.12em}
+.chapter-icon--chip::before{content:"";width:.62em;height:.56em;border:1.5px solid currentColor;border-radius:3px}
+.chapter-icon--chip::after{
+  content:"";position:absolute;top:50%;left:50%;width:1px;height:.15em;transform:translate(-50%,-50%);
+  box-shadow:-.19em -.44em,0 -.44em,.19em -.44em,-.19em .44em,0 .44em,.19em .44em;
+}
+.chapter-icon--code{font:700 1em/1 ui-monospace,monospace;letter-spacing:-.1em}
+@media(max-width:420px){
+  .chapters{font-size:.87em}
+  .chapters button{text-align:center}
+  .chapter-icon{display:none}
+}
+@media(min-width:1100px) and (orientation:landscape){
+  .chapter-name .en{display:inline;margin:0 0 0 .5em}
+}
 #mechanical,#electronics,#programming{background:white;border:1px solid var(--line);
-  border-radius:17px;box-shadow:0 8px 26px #3057790c;padding:clamp(8px,1.7dvh,20px)}
+  margin:0;border-radius:0 0 17px 17px;box-shadow:0 8px 26px #3057790c;padding:clamp(8px,1.7dvh,20px)}
+#electronics,#programming{overflow:hidden}
 #mechanical nav,.electron-tabs{background:#edf3f8;padding:4px;gap:4px;border-radius:10px}
 #mechanical nav button,.electron-tabs button{border-color:transparent;text-align:center}
 #mechanical nav button:not([aria-selected=true]),.electron-tabs button:not([aria-pressed=true]){background:transparent}
@@ -138,7 +177,8 @@ footer{border-top:none;padding-inline:0}
 #programming .steps strong + .en{margin:.25em 0 .65em}
 #programming code{background:#e4f0fc;color:#074f9e;border-radius:4px;padding:.1em .25em}
 @media (orientation:landscape){
-  main{padding:clamp(6px,1.6dvh,20px);gap:clamp(6px,1.6dvh,18px)}
+  main{padding:clamp(6px,1.6dvh,20px);gap:0 clamp(6px,1.6dvh,18px)}
+  #mechanical,#electronics,#programming{border-top-left-radius:17px}
   #mechanical{gap:clamp(5px,1.6dvh,15px)}
   #mechanical nav{justify-self:start}
   #mechanical article{grid-template-columns:minmax(0,1.95fr) minmax(0,1fr);
@@ -388,12 +428,21 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
 <h1>SoccerBot 動畫教室<span class="en" lang="en">AnimClass</span></h1>
 </div>
 </header>
-<nav class="chapters" aria-label="篇章 / Chapters">
-<button data-chapter="mechanical" aria-pressed="true">機械篇<span class="en" lang="en">Mechanics</span></button>
-<button data-chapter="electronics" aria-pressed="false">電子篇<span class="en" lang="en">Electronics</span></button>
-<button data-chapter="programming" aria-pressed="false">編程篇<span class="en" lang="en">Programming</span></button>
+<nav class="chapters" role="tablist" aria-label="篇章 / Chapters">
+<button id="chapter-mechanical" type="button" role="tab" aria-controls="mechanical" aria-selected="true">
+  <span class="chapter-icon chapter-icon--gear" aria-hidden="true">⚙︎</span>
+  <span class="chapter-name">機械篇<span class="en" lang="en">Mechanics</span></span>
+</button>
+<button id="chapter-electronics" type="button" role="tab" aria-controls="electronics" aria-selected="false" tabindex="-1">
+  <span class="chapter-icon chapter-icon--chip" aria-hidden="true"></span>
+  <span class="chapter-name">電子篇<span class="en" lang="en">Electronics</span></span>
+</button>
+<button id="chapter-programming" type="button" role="tab" aria-controls="programming" aria-selected="false" tabindex="-1">
+  <span class="chapter-icon chapter-icon--code" aria-hidden="true">&lt;/&gt;</span>
+  <span class="chapter-name">編程篇<span class="en" lang="en">Programming</span></span>
+</button>
 </nav>
-<section id="mechanical">
+<section id="mechanical" role="tabpanel" aria-labelledby="chapter-mechanical">
 <nav class="lesson-tabs" role="tablist" aria-label="動畫主題 / Animations">
 <button role="tab" id="tab-0" aria-controls="panel-0" aria-selected="true"><span class="lesson-number">1</span>齒輪箱<span class="en" lang="en">Gearbox</span></button>
 <button role="tab" id="tab-1" aria-controls="panel-1" aria-selected="false"><span class="lesson-number">2</span>履帶轉向<span class="en" lang="en">Track steering</span></button>
@@ -439,7 +488,7 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
 </div>
 </article>
 </section>
-<article id="electronics" hidden>
+<div id="electronics" role="tabpanel" aria-labelledby="chapter-electronics" hidden>
 <nav class="electron-tabs lesson-tabs" aria-label="電子篇步驟 / Electronics steps">
 <button id="partsTab" aria-pressed="true"><span class="lesson-number">1</span>認識零件<span class="en" lang="en">Meet the parts</span></button>
 <button id="assemblyTab" aria-pressed="false"><span class="lesson-number">2</span>組裝與接線<span class="en" lang="en">Assemble &amp; connect</span></button>
@@ -477,8 +526,8 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
 <button data-output="servo" aria-pressed="false">轉動舵機<span class="en" lang="en">Turn servo</span></button>
 </div><p class="e-status" id="outputStatus" aria-live="polite">選一個零件，看看訊號怎樣到達。<span class="en" lang="en">Choose a part and follow the signal.</span></p></div>
 </section>
-</article>
-<article id="programming" hidden>
+</div>
+<div id="programming" role="tabpanel" aria-labelledby="chapter-programming" hidden>
 <nav class="electron-tabs lesson-tabs" aria-label="編程篇分頁 / Programming lessons">
 <button data-program="connect" aria-pressed="true"><span class="lesson-number">1</span>連線<span class="en" lang="en">Connect</span></button>
 <button data-program="code" aria-pressed="false"><span class="lesson-number">2</span>讀一行程式<span class="en" lang="en">Read a line of code</span></button>
@@ -549,7 +598,7 @@ button:is([aria-selected="true"],[aria-pressed="true"]) .lesson-number{backgroun
 <div class="sim-actions"><button id="simReset">重置<span class="en" lang="en">Reset</span></button><span id="simCommand" class="sim-command" aria-live="polite">模擬指令 <code>/stop</code><span class="en" lang="en">Simulated command</span></span></div>
 </div>
 </section>
-</article>
+</div>
 </main>
 <script>
 const $ = id => document.getElementById(id);
@@ -603,19 +652,34 @@ function bilingual(el, zh, en) {
   sub.textContent = en;
   el.replaceChildren(zh, sub);
 }
-const chapterButtons = [...document.querySelectorAll('[data-chapter]')];
+const chapterTabs = [...document.querySelectorAll('.chapters [role=tab]')];
 let currentChapter = 'mechanical';
-for(const button of chapterButtons){
-  button.onclick=()=>{
+chapterTabs.forEach((tab, index) => {
+  tab.onclick=()=>{
     if(currentChapter==='programming'){stopSimulationDrive();resetCodeDemo();}
-    currentChapter=button.dataset.chapter;
-    for(const other of chapterButtons){
-      const selected=other===button;
-      other.setAttribute('aria-pressed',selected);
-      $(other.dataset.chapter).hidden=!selected;
+    currentChapter=tab.getAttribute('aria-controls');
+    for(const other of chapterTabs){
+      const selected=other===tab;
+      other.setAttribute('aria-selected',selected);
+      other.tabIndex=selected?0:-1;
+      $(other.getAttribute('aria-controls')).hidden=!selected;
     }
   };
-}
+  tab.onkeydown = event => {
+    let next;
+    switch(event.key){
+      case 'ArrowLeft': next=(index+chapterTabs.length-1)%chapterTabs.length; break;
+      case 'ArrowRight': next=(index+1)%chapterTabs.length; break;
+      case 'Home': next=0; break;
+      case 'End': next=chapterTabs.length-1; break;
+      default: return;
+    }
+    event.preventDefault();
+    const nextTab=chapterTabs[next];
+    if(nextTab!==tab)nextTab.click();
+    nextTab.focus();
+  };
+});
 const connectSteps=[
   ['裝上 ESP32-C3','Fit ESP32-C3','ESP32-C3 插在擴展板的排針上。','The ESP32-C3 plugs into the expansion board headers.'],
   ['接舵機','Connect the servo','舵機的三線插頭橫向接到 H2。','The servo’s three-wire plug slides into H2.'],
@@ -686,7 +750,7 @@ for(const button of outputButtons){
 }
 updateAssemblyButton();
 
-const tabs = [...document.querySelectorAll('[role=tab]')];
+const tabs = [...document.querySelectorAll('#mechanical [role=tab]')];
 const canvases = [$('gears'), $('tracks'), $('fork'), $('simCanvas')];
 const contexts = canvases.map(canvas => canvas.getContext('2d'));
 let active = 0;
